@@ -14,5 +14,5 @@
 #   Test Package:              'Cmd + Shift + T'
 
 hello <- function() {
-  print("Hello, world! test 2")
+  print("Hello, world! test 3")
 }
