@@ -1,3 +1,5 @@
+
+
 # Subtract baseline of the the same pin in each cycle
 pin_baseline_sub <- function(datF = dat, scheme = scheme) {
     # offset to the start and the end of the baseline
@@ -23,9 +25,10 @@ pin_baseline_sub <- function(datF = dat, scheme = scheme) {
     return(datF)
 }
 
+# function to subtract the baseline from a control pin
 contr_baseline_sub <- function(datF = dat, control = dat$control) {
+    # control from a control pin, which usually under
     contr_baseline = control
-
 
     # baseline subtraction
     for (idx in (setdiff(names(datF), c("Time", "index")))) {
