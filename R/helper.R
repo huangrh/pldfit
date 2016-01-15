@@ -1,4 +1,6 @@
+slice_equilibrate <- function(datF = dat, scheme = scheme) {
 
+}
 
 # Subtract baseline of the the same pin in each cycle
 pin_baseline_sub <- function(datF = dat, scheme = scheme) {
