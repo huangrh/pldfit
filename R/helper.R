@@ -1,5 +1,5 @@
 # Subtract baseline of the the same pin in each cycle
-baseline <- function(dat = dat[-1], index= index, offset = 5) {
+pinBaseline <- function(datF = dat[-1], index = index, offset = 5) {
     for (level in (levels(index))) {
         row_idx = index == level
         for (col_idx in (names(dat))) {
@@ -16,3 +16,4 @@ baseline <- function(dat = dat[-1], index= index, offset = 5) {
     return(dat)
 
 }
+
