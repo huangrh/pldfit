@@ -1,5 +1,40 @@
-slice_equilibrate <- function(datF = dat, scheme = scheme) {
+# strip rows at the end of association, representing the steady state.
+strip_rows <- function(datF = dat, scheme = scheme) {
+    start_ = scheme$steady_state$start
+    end_   = scheme$steady_state$end
+    index = datF$index
+    prebaseline <- scheme$cycle$prebaseline
+    baseline    <- scheme$cycle$baseline
+    datF_out = data.frame()
+    for (level in levels(index)) {
+        row_idx = index == level
+        datF_temp = datF[row_idx, ]
+        start = min(datF_temp$Time) + prebaseline + baseline + scheme$steady_state$start
+        end = start + scheme$steady_state$end - scheme$steady_state$start
+        datF_temp = dplyr::filter(datF[row_idx, ], Time > start, Time < end)
+        datF_out = rbind(datF_out, datF_temp)
+    }
 
+    return(datF_out)
+}
+
+# calculate the mean of the stripped rows.
+# As such, the input data frame should be returned from the function strip_rows.
+strip_mean <- function(datF = data.frame(), scheme = scheme) {
+    index = datF$index
+    datF_mean = data.frame()
+    # datF_std = data.frame()
+
+    for (level in levels(index)) {
+        row_idx = index == level
+        datF_temp = datF[row_idx, ]
+
+        for (col_idx in (setdiff(names(datF), c("Time", "index"))) ) {
+            datF_mean[level, col_idx] = mean(unlist(datF[row_idx, col_idx]))
+        }
+    }
+    datF_mean$index = (rownames(datF_mean))
+    return(datF_mean)
 }
 
 # Subtract baseline of the the same pin in each cycle
