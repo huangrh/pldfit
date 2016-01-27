@@ -1,10 +1,10 @@
-Package: xyFit
+Package: sgfit
 Type: Package
 Title: SensorGram kinetic data fitting, especialy for BLI and SPR data
 Version: 0.1
 Date: 2016-01-14
 Author: Ren-Huai Huang, huangrenhuai@gmail.com
-Maintainer: Who to complain to <yourfault@somewhere.net>
+Maintainer: Ren-Huai Huang <huangrenhuai@gmail.com>
 Description: More about what it does (maybe more than one line)
 Imports: minpack.lm,
             reshape2,

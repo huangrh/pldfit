@@ -1,4 +1,4 @@
-# xyFit
+# sgfit
 
 Biosensor data fiting. 
 There are two popular biosensor techniques, Bio-layer interferometry (BLI) and Surface plasmon resonance (SPR).  
@@ -9,6 +9,6 @@ First I working using dimerization model including both steady state and kinetic
 
 
 # to install
-install_github("huangrenhuai/xyFit")
+install_github("huangrenhuai/sgfit")
 
 # more to come
