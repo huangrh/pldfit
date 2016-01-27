@@ -1,3 +1,5 @@
+`%notin%` <- Negate(`%in%`)
+
 # strip rows at the end of association, representing the steady state.
 strip_rows <- function(datF = dat, scheme = scheme) {
     start_ = scheme$steady_state$start
@@ -14,6 +16,7 @@ strip_rows <- function(datF = dat, scheme = scheme) {
         datF_temp = dplyr::filter(datF[row_idx, ], Time > start, Time < end)
         datF_out = rbind(datF_out, datF_temp)
     }
+    # datF_out$index = with(datF_out, factor(index, levels = rev(levels(index))))
 
     return(datF_out)
 }
@@ -31,9 +34,12 @@ strip_mean <- function(datF = data.frame(), scheme = scheme) {
 
         for (col_idx in (setdiff(names(datF), c("Time", "index"))) ) {
             datF_mean[level, col_idx] = mean(unlist(datF[row_idx, col_idx]))
+
         }
     }
-    datF_mean$index = (rownames(datF_mean))
+    datF_mean$index = as.factor(rownames(datF_mean))
+    datF_mean$index = with(datF_mean, factor(index, levels = rev(levels(index))))
+
     return(datF_mean)
 }
 

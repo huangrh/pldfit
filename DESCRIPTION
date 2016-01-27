@@ -6,7 +6,7 @@ Date: 2016-01-14
 Author: Ren-Huai Huang, huangrenhuai@gmail.com
 Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
-Imports: minpack.m,
+Imports: minpack.lm,
             reshape2,
             ggplot2,
             grid
