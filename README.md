@@ -11,4 +11,6 @@ First I working using dimerization model including both steady state and kinetic
 # to install
 install_github("huangrenhuai/sgfit")
 
-# more to come
+# An introduction  
+
+https://huangrenhuai.github.io/sgfitvignettes/BLI%20Sensor%20Gram%20Data%20Fitting.html
