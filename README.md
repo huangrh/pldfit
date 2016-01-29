@@ -1,4 +1,4 @@
-# Protein-Ligand Biosensor Data Fitting
+# Protein-Ligand Biosensor Data Fitting in R
 -----
 There are two popular biosensor techniques:  
 * Bio-layer interferometry (BLI) 
