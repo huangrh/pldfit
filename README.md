@@ -6,10 +6,14 @@ There are two popular biosensor techniques:
 
 Model to be developed in the package:  
 * Simple one to one binding
+  + steady state 
+  + kinetic 
 * Dimerization model:  
   + steady state 
   + kinetic 
 * Multiple binding sites 
+  + steady state 
+  + kinetic 
 * Others
 
 -----
