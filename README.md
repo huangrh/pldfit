@@ -18,6 +18,6 @@ Model to be developed in the package:
 https://huangrenhuai.github.io/sgfit/vignettes/BLI%20Sensor%20Gram%20Data%20Fitting.html
 
 ### To install
-> require(devtools)  
-> install_github("huangrenhuai/sgfit")
+#> require(devtools)  
+#> install_github("huangrenhuai/sgfit")
 
