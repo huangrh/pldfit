@@ -14,7 +14,7 @@ vignette: >
 
 $A + L \overset{k_{on}}{\underset{k_{off}}\rightleftarrows} AL$  
 
-##### Below is the parameters:    
+##### Below is the equations:    
 
 * Response (nm): $R = [AL] = y$    
 * Ligand on the sensor: $[L] = R_{max} - R$  
