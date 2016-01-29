@@ -19,7 +19,7 @@ Model to be developed in the package:
 -----
 ### To learn more of the background of biosensor data fiting:  
 
-https://huangrenhuai.github.io/pldfit/vignettes/Protein%20Ligand%20Biosensor%20Data%20Fitting.html
+https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html
 
 -----
 ### To install the package:  
