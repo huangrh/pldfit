@@ -1,11 +1,16 @@
 # Kinetic Fitting of Protein-Ligand Biosensor Data
 
-Biosensor data fiting. 
-There are two popular biosensor techniques, Bio-layer interferometry (BLI) and Surface plasmon resonance (SPR).  
+There are two popular biosensor techniques:  
+* Bio-layer interferometry (BLI) 
+* Surface plasmon resonance (SPR).  
 
-The purpose of the package is to develop a interface to 
-
-First I working using dimerization model including both steady state and kinetic fitting. Then I will working on model with multiple binding sites. 
+Model to be developed in the package:  
+* Simple one to one binding
+* Dimerization model:  
+  + steady state 
+  + kinetic 
+* Multiple binding sites 
+* Others
 
 
 ### To learn the equation of biosensor data fiting. 
