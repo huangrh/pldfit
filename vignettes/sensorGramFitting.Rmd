@@ -14,20 +14,28 @@ vignette: >
 
 $A + L \overset{k_{on}}{\underset{k_{off}}\rightleftarrows} AL$  
 
-##### Below is the equations:    
+* A: the protein to be analyzed. 
+* L: Ligand immobilized on the pin
+* AL: Complex formed on the pin
 
-* Response (nm): $R = [AL] = y$    
-* Ligand on the sensor: $[L] = R_{max} - R$  
-* Conc. of the analytes: $C = [conc] = [A]$  
-* $R_{max} = [AL] + [L]$  
-* Rate equation: ${d[AL] \over dt} = k_{on}  [A]  [L] - k_{off}  [AL]$
+*Below is the rate equation:*    
+
+${d[AL] \over dt} = k_{on}  [A]  [L] - k_{off}  [AL]$
+
 * other forms: 
+
     + ${dy \over dt} = k_{on} [conc] (R_{max} - R) - k_{off}  y$  
 
     + ${dy \over dt} = k_{on} [conc] R_{max} - (k_{on} [conc] + k_{off})  y$ 
 
     + ${dy \over dt} = k_{on} C R_{max} - (k_{on} C + k_{off})  R$ 
 
+* Parameters:
+
+    + Response (nm): $R = [AL] = y$    
+    + Ligand on the sensor: $[L] = R_{max} - R$  
+    + Conc. of the analytes: $C = [conc] = [A]$  
+    + $R_{max} = [AL] + [L]$  
 -----
 
 ## 1.2 Dimerization model 
