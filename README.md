@@ -1,4 +1,4 @@
-# Kinetic Fitting of Protein-Ligand Biosensor Data
+# Protein-Ligand Biosensor Data Fitting
 -----
 There are two popular biosensor techniques:  
 * Bio-layer interferometry (BLI) 
