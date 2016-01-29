@@ -1,4 +1,4 @@
-Package: sgfit
+Package: pldfit
 Type: Package
 Title: SensorGram kinetic data fitting, especialy for BLI and SPR data
 Version: 0.1
