@@ -13,7 +13,7 @@ Model to be developed in the package:
 * Others
 
 
-### To learn the background of biosensor data fiting:  
+### To learn more about the background of biosensor data fiting:  
 
 https://huangrenhuai.github.io/sgfit/vignettes/BLI%20Sensor%20Gram%20Data%20Fitting.html
 
