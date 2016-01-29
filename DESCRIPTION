@@ -12,3 +12,6 @@ Imports: minpack.lm,
             grid
 License: What license is it under?
 LazyData: TRUE
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr

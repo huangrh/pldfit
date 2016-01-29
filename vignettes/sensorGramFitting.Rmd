@@ -1,0 +1,122 @@
+---
+title: "BLI Sensor Gram Data Fitting"
+author: "Auther: Ren-Huai Huang"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{BLI Sensor Gram Data Fitting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# 1. Introduction: 
+## 1.1 Simple one to one model:  
+
+$A + L \overset{k_{on}}{\underset{k_{off}}\rightleftarrows} AL$  
+
+##### Below is the parameters:    
+
+* Response (nm): $R = [AL] = y$    
+* Ligand on the sensor: $[L] = R_{max} - R$  
+* Conc. of the analytes: $C = [conc] = [A]$  
+* $R_{max} = [AL] + [L]$  
+* Rate equation: ${d[AL] \over dt} = k_{on}  [A]  [L] - k_{off}  [AL]$
+* other forms: 
+    + ${dy \over dt} = k_{on} [conc] (R_{max} - R) - k_{off}  y$  
+
+    + ${dy \over dt} = k_{on} [conc] R_{max} - (k_{on} [conc] + k_{off})  y$ 
+
+    + ${dy \over dt} = k_{on} C R_{max} - (k_{on} C + k_{off})  R$ 
+
+-----
+
+## 1.2 Dimerization model 
+### 1.2.1 Dimerization model in equilibration
+
+<ul>    
+<li>On sensor tip:</li>      
+  $A + B \overset{Kd_1}{\rightleftarrows} AB \;\;$   $\Rightarrow Response (nm) = \frac{R_{max}*[A]}{Kd_1+[A]}$   
+
+<li>In solution :</li>     
+  $A + A \overset{Kd_2}{\rightleftarrows} AA$  
+  $Kd_2=\frac{[A]*[A]}{[AA]}=\frac{[A]^2}{[AA]}\Rightarrow [AA]=\frac{[A]^2}{Kd_2}$ & $[At] = [A] + 2[AA]$    
+  $\Rightarrow [At]=[A]+2*\frac{[A]^2}{Kd_2} \Rightarrow 2[A]^2 + Kd_2 * [A] -Kd_2*[At] = 0$     
+  $\Rightarrow [A] = \frac{-Kd_2+\sqrt{Kd_2^2+8Kd_2*[At]}}{4}$  
+
+<li>Combine above equations together, assumming $Kd_1 = Kd_2 = Kd$:</li>   
+  $Response(nm)=\frac{R_{max}*(-Kd+\sqrt[]{Kd^2+8Kd*[At]})}{3Kd+\sqrt[]{Kd^2+8Kd*[At]}}$     
+</ul>    
+
+
+### 1.2.2 Kinetic model of dimerization
+<ul>
+<li>D1D2 dimerization in solution: </li>     
+  $A + A \overset{Kd_2}{\rightleftarrows} AA$   
+  $\Rightarrow [A] = \frac{-Kd_2+\sqrt{Kd_2^2+8Kd_2*[At]}}{4}$     
+  Where: $[A]$ is the D1D2 monomer contration.   
+  
+<li>On sensor tip: </li>
+     
+  $A + B \overset{k_{on}}{\underset{k_{off}}\rightleftarrows} AB \; (Kd_1)$    
+  $\frac{d[AB]}{dt} = k_{on} [A] [B] - k_{off} [AL]$  <br/>  
+  $\Rightarrow$
+   $\frac{dy}{dt} = k_{on} [A] (R_{max} - R) - k_{off} * R$      ( Called "simple 1:1 model" )
+  
+  $\Rightarrow$
+   $\frac{dy}{dt} = k_{on} \frac{-Kd_2+\sqrt{Kd_2^2+8Kd_2*[At]}}{4} (R_{max} - R) - k_{off} * R$  
+   Where $Kd_{2} = \frac{k_{off}}{k_{on}}$, assuming $Kd_1 = Kd_2$. 
+   
+</ul>  
+
+</font>
+
+## 2. Model fitting using numerical intergration
+
+### 2.1 *Input data: *
+
+* xdata: time (sec)
+* ydata: response (nm)
+
+### 2.2 *step:*    
+
+* rate equation: $\frac{dy}{dt}$    
+* calculated response or f(xdata, params) = cumsum (dy*dt)   
+* Error func: resid(params) = calculated response f(xdata, params) - measured response (ydata)  
+    + should take at least one (possibley length N vector ) argument 
+    + and returns M floating numbers
+    + it must not return NA, NaN or fitting might fail. 
+* sum square of the errors: sum(resid ** 2)    
+* optimization, minimize:    
+    + nls in R or scipy.optimize.leastsq in python    
+    + minipack.lm::nlsLM, LMA,  levenberg-Maquardt algorithm    
+    + GenSA, simulatd annealing    
+    + DEoption    
+
+### 2.3 *Example:* 
+#### 2.3.1 *nls.lm from minpack.lm:*         
++ minimize the sum square of the vector returned by gthe function fn     
++ use a modification of the levenberg-marquardt algorithm.     
++ usage: nls.lm(par, lower = NULL, upper = NULL, fn, jac = NULL, 
+    control = nls.lm.control(), ...)
+    - par: a list of numeric vector with initial estimates. 
+    - fn: a function that returns a vector of residuals, the sum squae of which is to be minimized.  
+    - fn: the first argument of fn must be par. 
+    - jac: a function to return the Jacobian for the fn function. 
+    - control: see nls.lm.control
+    - ...: further arguments to be passed to fn and jac
++ both functions fn and jac (if provided) must return numeric vectors. 
++ the length of the vector returned by fn must not be lower than the length of par. 
+
+#### 2.3.2 * GenSA, Generalized Simulated Annealing:*   
+
++ searches for global minimum of a very complex non-linear objetive function with a very large number of optima. 
++ Usage: GenSA(pan, fn, lower, upper, control=list(), ...)
+    - par: initial values for the compnents to be optimized.   
+    - par: Default is NULL, in which case, default values will be generated automatically.   
+    - fn: a function to be minimized.     
+    - fn: the first argument of fn should be the vector of parameters over which minimization is to take place.   
+    - fn: fn should return a scalar result.     
+    - lower: vector with length of par. Lower bounds for components.     
+    - upper: vector with length of par. Upper bounds for components.     
+    - ...: allows the user to pass additinal arguments to the function fn. 
+    - control: control parameters, including temperature, maxit, etc.
