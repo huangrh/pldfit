@@ -1,6 +1,6 @@
 ---
 title: "BLI Sensor Gram Data Fitting"
-author: "Auther: Ren-Huai Huang"
+author: "Ren-Huai Huang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -107,7 +107,7 @@ $A + L \overset{k_{on}}{\underset{k_{off}}\rightleftarrows} AL$
 + both functions fn and jac (if provided) must return numeric vectors. 
 + the length of the vector returned by fn must not be lower than the length of par. 
 
-#### 2.3.2 * GenSA, Generalized Simulated Annealing:*   
+#### 2.3.2 *GenSA, Generalized Simulated Annealing:*   
 
 + searches for global minimum of a very complex non-linear objetive function with a very large number of optima. 
 + Usage: GenSA(pan, fn, lower, upper, control=list(), ...)
