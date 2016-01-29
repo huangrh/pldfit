@@ -1,5 +1,5 @@
 ---
-title: "BLI Sensor Gram Data Fitting"
+title: "Protein-Ligand Biosensor Data Fitting"
 author: "Ren-Huai Huang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
