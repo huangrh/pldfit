@@ -1,4 +1,4 @@
-# sgfit
+# Kinetic fitting of protein-ligand biosensor data
 
 Biosensor data fiting. 
 There are two popular biosensor techniques, Bio-layer interferometry (BLI) and Surface plasmon resonance (SPR).  
