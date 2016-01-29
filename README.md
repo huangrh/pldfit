@@ -15,10 +15,10 @@ Model to be developed in the package:
 
 ### To learn more about the background of biosensor data fiting:  
 
-https://huangrenhuai.github.io/sgfit/vignettes/BLI%20Sensor%20Gram%20Data%20Fitting.html
+https://huangrenhuai.github.io/pldfit/vignettes/BLI%20Sensor%20Gram%20Data%20Fitting.html
 
 -----
 ### To install the package:  
   require(devtools)  
-  install_github("huangrenhuai/sgfit")
+  install_github("huangrenhuai/pldfit")
 
