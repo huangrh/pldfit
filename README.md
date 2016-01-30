@@ -17,7 +17,7 @@ Model to be developed in the package:
 * Others
 
 -----
-### To learn more of the background of biosensor data fiting:  
+### Equation derivation and introduction:   
 
 https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html
 
