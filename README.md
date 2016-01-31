@@ -21,7 +21,7 @@ Model to be developed in the package:
 ### Installation
 
 pldfit is in the earlier developing stage. To get the currect development version from github:    
-  \# require devtools
+  \# require devtools  
   \> require(devtools)  
   \> devtools::install_github("huangrenhuai/pldfit")
 
