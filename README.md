@@ -16,10 +16,6 @@ Model to be developed in the package:
   + kinetic 
 * Others
 
------
-### Equation derivation and introduction:   
-
-https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html
 
 -----
 ### Installation
@@ -27,4 +23,9 @@ https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Dat
 pldfit is in the earlier developing stage. To get the currect development version from github:    
 -  require(devtools)  
 -  install_github("huangrenhuai/pldfit")
+-  
+-----
+### Equation derivation and introduction:   
+
+https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html
 
