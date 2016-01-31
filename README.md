@@ -26,7 +26,7 @@ pldfit is in the earlier developing stage. To get the currect development versio
   \> devtools::install_github("huangrenhuai/pldfit")
 
 -----
-### Equation derivation and introduction:   
+### Model Development:   
 
 https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html
 
