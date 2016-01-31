@@ -22,7 +22,9 @@ Model to be developed in the package:
 https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html
 
 -----
-### To install the package in R:  
-  require(devtools)  
-  install_github("huangrenhuai/pldfit")
+### Installation
+
+pldfit is in the earlier developing stage. To get the currect development version from github:    
+-  require(devtools)  
+-  install_github("huangrenhuai/pldfit")
 
