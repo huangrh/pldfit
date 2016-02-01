@@ -30,3 +30,5 @@ pldfit is in the earlier developing stage. To get the currect development versio
 
 https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html
 
+[![Travis-CI Build Status](https://travis-ci.org/huangrenhuai/pldfit.svg?branch=master)](https://travis-ci.org/huangrenhuai/pldfit)
+

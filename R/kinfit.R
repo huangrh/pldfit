@@ -1,6 +1,6 @@
 ### minimize the residFun using nls.lm
 
-kinfit <- function(par= par, env= env) {
+kinfit <- function(par= par, env = env) {
     #
     lowerBound  <- as.numeric(env$lowerBound);
     upperBound  <- as.numeric(env$upperBound);
