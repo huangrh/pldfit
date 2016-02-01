@@ -1,9 +1,10 @@
 ### minimize the residFun using nls.lm
 
-kinfit <- function(par= par, env = env) {
+kinfit <- function(par= par, dat = dat) {
     #
-    lowerBound  <- as.numeric(env$lowerBound);
-    upperBound  <- as.numeric(env$upperBound);
+
+    lowerBound  <- as.numeric(dat$lowerBound);
+    upperBound  <- as.numeric(dat$upperBound);
     #env_test$concs      = concs;
     #env_test$datF       = ySimulated;
     minpack.lm::nls.lm(par = par,
@@ -12,5 +13,5 @@ kinfit <- function(par= par, env = env) {
                        fn= residArray,
                        jac = NULL,
                        control = minpack.lm::nls.lm.control(),
-                       env = env)
+                       dat = dat)
 }

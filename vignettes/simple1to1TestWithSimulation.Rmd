@@ -1,0 +1,79 @@
+---
+title: "Simulation of Real-Time Binding Curves: Simple One to One Binding"
+author: "Ren-Huai Huang"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Data simulation
+```{r, echo = FALSE, results = FALSE, message = FALSE}
+knitr::opts_chunk$set(fig.width=6.5, fig.height = 4)
+require(reshape2); 
+require(ggplot2);
+require(grid)
+
+# require(xyFit)
+
+```
+
+# Simulation & Plot
+```{r}
+
+require(pldfit)
+# simulate the data use the following parameters
+par = list(kon  = 2e2, koff = 1e-2, rmax = 1)
+datsim = list()
+datsim$concs <- 1e-5 * (2^(0:5));
+datsim$xdata = seq(0, 300, length.out = 1501); # time 
+datsim$t2   = 150
+datsim$ydata = NULL
+
+# simulation
+xySimulated <- dfsimple1to1(par = par, dat = datsim, noise = 0.01) 
+
+
+# plot the simulation
+# ySimulated$Time = time; 
+xy <-reshape2::melt(data = xySimulated, 
+                     id.vars = "Time", 
+                     measure.vars = rev(1:6), 
+                     variable.name = "Conc")
+
+g <- ggplot() + theme_classic() + xlab("Time (sec)") + ylab("Response (nm)") +
+    labs(linetype= 'title') + ylim(-0.025,1) + 
+    theme(legend.position=c(0.9, 0.65),
+          legend.text=element_text(size = rel(1)),
+          legend.key.size=unit(0.9,"line"));
+g <- g + geom_line(data = xy, aes(x = Time, y = value, color = Conc));
+print(g)
+
+```
+
+## Fitting
+```{r}
+
+# init
+initPar_test = list(kon =1, koff = 1, rmax = 1) 
+dat_test <- datsim
+dat_test$t2 <- 149.9 # t2 is the beginning of the diassociation. 
+dat_test$lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.01);
+dat_test$upperBound = list(kon =1e04, koff=1e04, rmax = 10);
+dat_test$datF       = within(xySimulated, rm("Time")); 
+
+# Fit
+fit <- kinfit(par = initPar_test, dat = dat_test)
+names(fit)
+par # simulation parameters
+fit$par # paramenters after fitting
+cbind(simulation= par, init = initPar_test, fitting = fit$par)
+
+#prodict and plot
+predFit <- dfsimple1to1(par = fit$par, dat = dat_test, noise = 0)
+predFit <- reshape2::melt(predFit, id.vars = "Time")
+g + geom_line(data=predFit, aes(x = Time, y = value, group = variable) ) 
+
+```

@@ -1,11 +1,11 @@
 ### define the residual function
-residArray = function(par = params, env= env_test)
+residArray = function(par = par, dat= dat)
 {
     # take the data out
-    dat     <- env$datF;
-    t2      <- env$t2;
-    concs   <- env$concs;
-    time    <- env$Time;
+    datF     <- dat$datF;
+    t2      <- dat$t2;
+    concs   <- dat$concs;
+    time    <- dat$xdata;
     len <- length(time);
 
     #
@@ -16,8 +16,8 @@ residArray = function(par = params, env= env_test)
     {
         # set the concentration of the dissociation to zero.
         conc <- ifelse(time < t2, concs[idx], 0)
-        y_data <- dat[[idx]]
-        out <- yPred(par=par, conc, time, y_data) - y_data
+        ydata <- datF[[idx]]
+        out <- ysimple1to1(par=par, conc, time, ydata) - ydata
     })
 
     #prepare for melt

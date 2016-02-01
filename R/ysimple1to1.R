@@ -11,8 +11,8 @@ ysimple1to1 = function(par = par, conc=conc, xdata=time, ydata = NULL) {
     # other input dat: conc, time, ydata.
 
     # dt: time intervals
-    len <- length(time);
-    dt  <- time[2:len] - time[1:(len-1)] # time intarvals, length is (len -1)
+    len <- length(xdata);
+    dt  <- xdata[2:len] - xdata[1:(len-1)] # time intarvals, length is (len -1)
 
     # define the simple1to1 model here.
     # measured responses with baseline corrected.
