@@ -1,5 +1,5 @@
 ---
-title: "Simulation of Real-Time Binding Curves: Simple One to One Binding"
+title: "Real-Time Binding Simulation: Simple One to One Binding"
 author: "Ren-Huai Huang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
