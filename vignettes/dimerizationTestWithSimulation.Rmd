@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Dimerization Model: Simulation and Fitting"
+author: "Ren-Huai Huang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -9,50 +9,68 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
-
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
-
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```{r, echo = FALSE, results = FALSE, warning = FALSE, message = FALSE}
+require(reshape2); require(ggplot2); require(grid)
+knitr::opts_chunk$set(fig.height = 4, fig.width = 4)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+## Simulation & plotting: 
+```{r}
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+#  parameters for simulation
+par = list(kon  = 2e2, koff = 1e-2, rmax = 1)
+concs <- 1e-5 * (2^(0:5));
+time = seq(0, 300, length.out = 1501); 
+t2   = 150
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+# simulation
+ySimulated <- yPred_df(par = par, concs = concs, time = time, t2 = t2, y_data = NULL) 
 
-## More Examples
+# Add errors to the simulated data
+ySimulated <- ySimulated + rnorm(ncol(ySimulated)*nrow(ySimulated), sd = 0.01)
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+# plot the simulation
+# with(ySimulated, plot(time, V6, type = "l")); for( i in 1:5) with(ySimulated, lines(time, ySimulated[[i]]))
+# another way to plot
+colnames(ySimulated) = concs
+ySimulated$Time = time; 
+dat <-reshape2::melt(data = ySimulated, id.vars = "Time", measure.vars = rev(1:6), variable.name = "Conc")
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+g <- ggplot() + theme_classic() 
+g <- g + theme(legend.position=c(0.95, 0.65),
+            legend.text=element_text(size = rel(1)),
+            legend.key.size=unit(0.9,"line"));
+g <- g + geom_line(data = dat, aes(x = Time, y = value, color = Conc));
+g <- g + xlab("Time (sec)") + ylab("Response (nm)") + ylim(-0.025,1);
+g <- g + labs(linetype= 'title')
+print(g)
 ```
 
-Also a quote using `>`:
+## Fitting & plotting: 
+```{r}
+# initilization for fitting. 
+initPar_test = list(kon =1, koff = 1, rmax = 1) 
+env_test <- new.env(parent = emptyenv())
+env_test$t2 <- 149.9 # t2 is the beginning of the diassociation. 
+env_test$lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.01);
+env_test$upperBound = list(kon =1e04, koff=1e04, rmax = 10);
+env_test$concs      = concs;
+env_test$datF       = within(ySimulated, rm("Time")); 
+env_test$Time       = time;
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+# Fit
+# test residFun.
+# resid_array <- residFun(par= par)
+
+fit <- kinFit(par = initPar_test, env = env_test)
+names(fit)
+par # simulation parameters
+fit$par # paramenters after fitting
+cbind(simulation= par, init = initPar_test, fitting = fit$par)
+
+#prodict and plot
+predFit <- yPred_dft(par = fit$par, concs = concs, time = time, t2 = t2, y_data = NULL)
+predFit <- reshape2::melt(predFit, id.vars = "Time")
+g + geom_line(data=predFit, aes(x = Time, y = value, group = variable) ) 
+
+```
