@@ -5,7 +5,7 @@
 # yPred only work on one concentration at a time
 # for multiple concentration, using ySimulate_df
 # params = list(kon =1, koff = 1, rmax = 1)
-yPred = function(par = params, conc, time, y_data = NULL) {
+ydimer_ = function(par = params, conc, time, y_data = NULL) {
     # fiting params
     kon   <- par$kon
     koff  <- par$koff
@@ -53,8 +53,8 @@ yPred = function(par = params, conc, time, y_data = NULL) {
 
 
 ##================================================================================##
-## wrapper of yPred, for concentration series. -------------------------------------
-yPred_df <-
+## wrapper of ydimer, for concentration series. -------------------------------------
+dfdimer_ <-
     function(par = par, concs = concs, time = time, t2 = t2, y_data = NULL) {
         example = matrix(0, ncol = length(concs), nrow = length(time))
         example = as.data.frame(example)
@@ -63,19 +63,10 @@ yPred_df <-
             conc = ifelse(time < t2, conc, 0);
             predict_y <- yPred(par = par, conc=conc, time=time, y_data = y_data);
         })
-        example;
+
+        example$Time <- time
+        return(example)
     }
-
-yPred_dft <-
-    function(par = par, concs = concs, time = time, t2 = t2, y_data = NULL) {
-    example <-
-        yPred_df(par = par, concs = concs, time = time, t2 = t2, y_data = NULL)
-    example$Time <- time
-    return(example)
-}
-##residFun
-
-##kinFit
 
 
 
