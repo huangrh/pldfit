@@ -22,7 +22,7 @@ Model to be developed in the package:
 -----
 ### Installation
 
-pldfit is developed in [R (following the link to download and install if you didn't do so)](https://cran.r-project.org/).   
+pldfit is developed in [R (following the link to download and install if you need)](https://cran.r-project.org/).   
 To get the currect development version from github:    
   \# require devtools  
   \> require(devtools)  
