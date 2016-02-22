@@ -1,5 +1,5 @@
 ---
-title: "Real-Time Binding Simulation: Simple One to One Binding"
+title: "Simple One to One Binding: Simulation"
 author: "Ren-Huai Huang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -43,14 +43,11 @@ require(reshape2);
 require(ggplot2);
 require(grid)
 
-# require(xyFit)
-
+require(pldfit)
 ```
 
 ## Simulation & Plot
 ```{r}
-
-require(pldfit)
 # simulate the data use the following parameters
 par = list(kon  = 2e2, koff = 1e-2, rmax = 1)
 datsim = list()
