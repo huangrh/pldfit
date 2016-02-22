@@ -9,7 +9,34 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+## Simple one to one model:  
 
+$A + L \overset{k_{on}}{\underset{k_{off}}\rightleftarrows} AL$  
+
+* A: the protein to be analyzed. 
+* L: Ligand immobilized on the pin
+* AL: Complex formed on the pin
+
+*Below is the rate equation:*    
+
+${d[AL] \over dt} = k_{on}  [A]  [L] - k_{off}  [AL]$
+
+* other forms: 
+
+    + ${dy \over dt} = k_{on} [conc] (R_{max} - R) - k_{off}  y$  
+
+    + ${dy \over dt} = k_{on} [conc] R_{max} - (k_{on} [conc] + k_{off})  y$ 
+
+    + ${dy \over dt} = k_{on} C R_{max} - (k_{on} C + k_{off})  R$ 
+
+* Parameters:
+
+    + Response (nm): $R = [AL] = y$    
+    + Ligand on the sensor: $[L] = R_{max} - R$  
+    + Conc. of the analytes: $C = [conc] = [A]$  
+    + $R_{max} = [AL] + [L]$  
+-----
+    
 ```{r, echo = FALSE, results = FALSE, message = FALSE}
 knitr::opts_chunk$set(fig.width=6.5, fig.height = 4)
 require(reshape2); 
