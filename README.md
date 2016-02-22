@@ -22,7 +22,7 @@ Model to be developed in the package:
 -----
 ### Installation
 
-pldfit is developed in [R](https://cran.r-project.org/).   
+pldfit is developed in [R (following the link to download and install if you didn't do so)](https://cran.r-project.org/).   
 To get the currect development version from github:    
   \# require devtools  
   \> require(devtools)  
@@ -33,7 +33,7 @@ To get the currect development version from github:
 
 [Equation](https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html)
 
-[Simple one to one: simulation and fitting](https://huangrenhuai.github.io/pldfit/vignettes/Real-Time%20Binding%20Simulation_%20Simple%20One%20to%20One%20Binding.html)
+[Simple one to one: simulation and fitting](https://huangrenhuai.github.io/pldfit/vignettes/Simple%20One%20to%20One%20Binding_%20Simulation.html)
 
 
 
