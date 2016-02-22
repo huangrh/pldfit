@@ -22,7 +22,8 @@ Model to be developed in the package:
 -----
 ### Installation
 
-pldfit is in the earlier developing stage. To get the currect development version from github:    
+pldfit is developed in [R](https://cran.r-project.org/). 
+To get the currect development version from github:    
   \# require devtools  
   \> require(devtools)  
   \> devtools::install_github("huangrenhuai/pldfit")
