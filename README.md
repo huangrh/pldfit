@@ -22,14 +22,14 @@ Model to be developed in the package:
 -----
 ### Installation
 
-pldfit is developed in [R](https://cran.r-project.org/). 
+pldfit is developed in [R](https://cran.r-project.org/).   
 To get the currect development version from github:    
   \# require devtools  
   \> require(devtools)  
   \> devtools::install_github("huangrenhuai/pldfit")
 
 -----
-### Model Development:   
+### Model equation & simulation:   
 
 [Equation](https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html)
 
