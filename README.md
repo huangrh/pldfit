@@ -33,7 +33,7 @@ To get the currect development version from github:
 
 [Equation](https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html)
 
-[Simple one to one: simulation and fitting](https://huangrenhuai.github.io/pldfit/vignettes/Simple%20One%20to%20One%20Binding_%20Simulation.html)
+[Simple one to one model: simulation & fitting](https://huangrenhuai.github.io/pldfit/vignettes/Simple%20One%20to%20One%20Binding_%20Simulation.html)
 
-
+[Dimerization model: simulation & fitting](https://huangrenhuai.github.io/pldfit/vignettes/Dimerization%20Model_%20Simulation%20%26%20Fitting.html)
 
