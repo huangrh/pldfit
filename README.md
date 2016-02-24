@@ -2,7 +2,8 @@
 
 # Protein-Ligand Biosensor Data Fitting in R
 -----
-The purpose of this package is to use R to fit the protein-ligand interaction data obtained from biosensor. 
+### Introduction    
+The purpose of this package is to use [R](https://cran.r-project.org/) to fit the protein-ligand interaction data obtained from biosensor. 
 
 -----
 There are two popular biosensor techniques to study protein-ligand insteraction:  
