@@ -100,7 +100,7 @@ ${d[AL] \over dt} = k_{on}  [A]  [L] - k_{off}  [AL]$
     + GenSA, simulatd annealing    
     + DEoption    
 
-### 2.3 *Example:* 
+### 2.3 *Algorithm:* 
 #### 2.3.1 *nls.lm from minpack.lm:*         
 + minimize the sum square of the vector returned by gthe function fn     
 + use a modification of the levenberg-marquardt algorithm.     

@@ -1,5 +1,5 @@
 ---
-title: "Dimerization Model: Simulation and Fitting"
+title: "Dimerization Model: Simulation & Fitting"
 author: "Ren-Huai Huang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -8,69 +8,103 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+## 1. Dimerization model 
+### 1.1. Dimerization model in equilibration
+
+<ul>    
+<li>On sensor tip:</li>      
+  $A + B \overset{Kd_1}{\rightleftarrows} AB \;\;$   $\Rightarrow Response (nm) = \frac{R_{max}*[A]}{Kd_1+[A]}$   
+
+<li>In solution :</li>     
+  $A + A \overset{Kd_2}{\rightleftarrows} AA$  
+  $Kd_2=\frac{[A]*[A]}{[AA]}=\frac{[A]^2}{[AA]}\Rightarrow [AA]=\frac{[A]^2}{Kd_2}$ & $[At] = [A] + 2[AA]$    
+  $\Rightarrow [At]=[A]+2*\frac{[A]^2}{Kd_2} \Rightarrow 2[A]^2 + Kd_2 * [A] -Kd_2*[At] = 0$     
+  $\Rightarrow [A] = \frac{-Kd_2+\sqrt{Kd_2^2+8Kd_2*[At]}}{4}$  
+
+<li>Combine above equations together, assumming $Kd_1 = Kd_2 = Kd$:</li>   
+  $Response(nm)=\frac{R_{max}*(-Kd+\sqrt[]{Kd^2+8Kd*[At]})}{3Kd+\sqrt[]{Kd^2+8Kd*[At]}}$     
+</ul>    
+
+
+### 1.2. Kinetic model of dimerization
+<ul>
+<li>D1D2 dimerization in solution: </li>     
+  $A + A \overset{Kd_2}{\rightleftarrows} AA$   
+  $\Rightarrow [A] = \frac{-Kd_2+\sqrt{Kd_2^2+8Kd_2*[At]}}{4}$     
+  Where: $[A]$ is the D1D2 monomer contration.   
+  
+<li>On sensor tip: </li>
+     
+  $A + B \overset{k_{on}}{\underset{k_{off}}\rightleftarrows} AB \; (Kd_1)$    
+  $\frac{d[AB]}{dt} = k_{on} [A] [B] - k_{off} [AL]$  <br/>  
+  $\Rightarrow$
+   $\frac{dy}{dt} = k_{on} [A] (R_{max} - R) - k_{off} * R$      ( Called "simple 1:1 model" )
+  
+  $\Rightarrow$
+   $\frac{dy}{dt} = k_{on} \frac{-Kd_2+\sqrt{Kd_2^2+8Kd_2*[At]}}{4} (R_{max} - R) - k_{off} * R$  
+   Where $Kd_{2} = \frac{k_{off}}{k_{on}}$, assuming $Kd_1 = Kd_2$. 
+   
+</ul>  
+
+-----
 
 ```{r, echo = FALSE, results = FALSE, warning = FALSE, message = FALSE}
 require(reshape2); require(ggplot2); require(grid)
 knitr::opts_chunk$set(fig.height = 4, fig.width = 4)
+require(pldfit)
 ```
 
-## Simulation & plotting: 
+## 2. Simulation & plotting: 
 ```{r}
-
-#  parameters for simulation
+# simulate the data use the following parameters
 par = list(kon  = 2e2, koff = 1e-2, rmax = 1)
-concs <- 1e-5 * (2^(0:5));
-time = seq(0, 300, length.out = 1501); 
-t2   = 150
+datsim = list()
+datsim$concs <- 1e-5 * (2^(0:5));
+datsim$xdata = seq(0, 300, length.out = 1501); # time 
+datsim$t2   = 150
+datsim$ydata = NULL
 
 # simulation
-ySimulated <- yPred_df(par = par, concs = concs, time = time, t2 = t2, y_data = NULL) 
-
-# Add errors to the simulated data
-ySimulated <- ySimulated + rnorm(ncol(ySimulated)*nrow(ySimulated), sd = 0.01)
+xySimulated <- dfdimer(par = par, dat = datsim, noise = 0.01) 
 
 # plot the simulation
-# with(ySimulated, plot(time, V6, type = "l")); for( i in 1:5) with(ySimulated, lines(time, ySimulated[[i]]))
-# another way to plot
-colnames(ySimulated) = concs
-ySimulated$Time = time; 
-dat <-reshape2::melt(data = ySimulated, id.vars = "Time", measure.vars = rev(1:6), variable.name = "Conc")
+# ySimulated$Time = time; 
+xy <-reshape2::melt(data = xySimulated, 
+                     id.vars = "Time", 
+                     measure.vars = rev(1:6), 
+                     variable.name = "Conc")
 
-g <- ggplot() + theme_classic() 
-g <- g + theme(legend.position=c(0.95, 0.65),
-            legend.text=element_text(size = rel(1)),
-            legend.key.size=unit(0.9,"line"));
-g <- g + geom_line(data = dat, aes(x = Time, y = value, color = Conc));
-g <- g + xlab("Time (sec)") + ylab("Response (nm)") + ylim(-0.025,1);
-g <- g + labs(linetype= 'title')
+g <- ggplot()  + xlab("Time (sec)") + ylab("Response (nm)") +
+    labs(linetype= 'title') + 
+    ylim(-0.025,1) + 
+    theme_classic() + 
+    theme(legend.position=c(0.9, 0.65),
+          legend.text=element_text(size = rel(1)),
+          legend.key.size=unit(0.9,"line"));
+g <- g + geom_line(data = xy, aes(x = Time, y = value, color = Conc));
 print(g)
+
 ```
 
-## Fitting & plotting: 
+## 3. Fitting & plotting: 
 ```{r}
-# initilization for fitting. 
+# init
 initPar_test = list(kon =1, koff = 1, rmax = 1) 
-env_test <- new.env(parent = emptyenv())
-env_test$t2 <- 149.9 # t2 is the beginning of the diassociation. 
-env_test$lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.01);
-env_test$upperBound = list(kon =1e04, koff=1e04, rmax = 10);
-env_test$concs      = concs;
-env_test$datF       = within(ySimulated, rm("Time")); 
-env_test$Time       = time;
+dat_test <- datsim
+dat_test$t2 <- 149.9 # t2 is the beginning of the diassociation. 
+dat_test$lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.01);
+dat_test$upperBound = list(kon =1e04, koff=1e04, rmax = 10);
+dat_test$datF       = within(xySimulated, rm("Time")); 
 
 # Fit
-# test residFun.
-# resid_array <- residFun(par= par)
-
-fit <- kinFit(par = initPar_test, env = env_test)
+fit <- kinfit(par = initPar_test, dat = dat_test, model = "dimer")
 names(fit)
 par # simulation parameters
 fit$par # paramenters after fitting
 cbind(simulation= par, init = initPar_test, fitting = fit$par)
 
 #prodict and plot
-predFit <- yPred_dft(par = fit$par, concs = concs, time = time, t2 = t2, y_data = NULL)
+predFit <- dfdimer(par = fit$par, dat = dat_test, noise = 0)
 predFit <- reshape2::melt(predFit, id.vars = "Time")
 g + geom_line(data=predFit, aes(x = Time, y = value, group = variable) ) 
-
 ```
