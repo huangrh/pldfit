@@ -16,7 +16,7 @@ Model developed in this package:
 * Multiple binding sites 
   + steady state 
   + kinetic 
-* Others: if you need other model, please contact me by <a href="mailto:huangrenhuai@gmail.com?Subject=Hello%20again" target="_top">EMail</a>
+* Others: if you need other model, please contact me by <a href="mailto:huangrenhuai@gmail.com?Subject=New%20model" target="_top">EMail</a>
 
 
 -----
