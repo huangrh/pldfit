@@ -29,9 +29,9 @@ To get the currect development version from github:
   \> devtools::install_github("huangrenhuai/pldfit")
 
 -----
-### Model equation & simulation:   
+### Model equation & simulation examples:   
 
-[Equation](https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html)
+[Equation & algotithm](https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html)
 
 [Simple one to one model: simulation & fitting](https://huangrenhuai.github.io/pldfit/vignettes/Simple%20One%20to%20One%20Binding_%20Simulation.html)
 
