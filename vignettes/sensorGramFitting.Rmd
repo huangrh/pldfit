@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# 1. Introduction: 
+## 1. Model equation: 
 ## 1.1 Simple one to one model:  
 
 $A + L \overset{k_{on}}{\underset{k_{off}}\rightleftarrows} AL$  
@@ -78,14 +78,14 @@ ${d[AL] \over dt} = k_{on}  [A]  [L] - k_{off}  [AL]$
 
 </font>
 
-## 2. Model fitting using numerical intergration
+## 2. *Fiting algorithm using numerical intergration*
 
 ### 2.1 *Input data: *
 
 * xdata: time (sec)
 * ydata: response (nm)
 
-### 2.2 *step:*    
+### 2.2 *Procedure:*    
 
 * rate equation: $\frac{dy}{dt}$    
 * calculated response or f(xdata, params) = cumsum (dy*dt)   
@@ -100,7 +100,7 @@ ${d[AL] \over dt} = k_{on}  [A]  [L] - k_{off}  [AL]$
     + GenSA, simulatd annealing    
     + DEoption    
 
-### 2.3 *Algorithm:* 
+### 2.3 *Minimization:* 
 #### 2.3.1 *nls.lm from minpack.lm:*         
 + minimize the sum square of the vector returned by gthe function fn     
 + use a modification of the levenberg-marquardt algorithm.     
