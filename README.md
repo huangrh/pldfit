@@ -2,11 +2,11 @@
 
 # Protein-Ligand Biosensor Data Fitting in R
 -----
-There are two popular biosensor techniques:  
+There are two popular biosensor techniques to study protein-ligand insteraction:  
 * Bio-layer interferometry (BLI) 
 * Surface plasmon resonance (SPR).  
 
-Model to be developed in the package:  
+Model developed in this package:  
 * Simple one to one binding
   + steady state 
   + kinetic 
@@ -16,7 +16,7 @@ Model to be developed in the package:
 * Multiple binding sites 
   + steady state 
   + kinetic 
-* Others
+* Others: if you need other model, please contact me by [email](huangrenhuai@gmail.com)
 
 
 -----
