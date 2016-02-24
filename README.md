@@ -3,24 +3,26 @@
 # Protein-Ligand Biosensor Data Fitting in R
 -----
 ### Introduction    
-The purpose of this package is to use [R](https://cran.r-project.org/) to fit the protein-ligand interaction data obtained from biosensor. 
+[R](https://cran.r-project.org/) is widely used in statistics analysis. A data frame is the most common way of storing data in [R](https://cran.r-project.org/). It is easy to convert biosensor data into a data frame. 
+The purpose of this package is to use [R](https://cran.r-project.org/) to develop novel models and fit the protein-ligand interaction data obtained from biosensor (both BLI and SPR). 
 
 -----
 There are two popular biosensor techniques to study protein-ligand insteraction:  
 * Bio-layer interferometry (BLI) 
 * Surface plasmon resonance (SPR).  
 
-Model developed in this package:  
+Model in the package:  
 * Simple one to one binding
   + steady state 
   + kinetic 
 * Dimerization model:  
   + steady state 
   + kinetic 
-* Multiple binding sites 
+* Multiple binding sites (to be developed)
   + steady state 
   + kinetic 
-* Other models: to request other model, please contact me by <a href="mailto:huangrenhuai@gmail.com?Subject=New%20model" target="_top">EMail</a>
+  
+Other models: to request other model, please contact me by <a href="mailto:huangrenhuai@gmail.com?Subject=New%20model" target="_top">EMail</a>
 
 
 -----
