@@ -22,7 +22,7 @@ Model in the package:
   + steady state 
   + kinetic 
   
-Other models: to request other model, please contact me by <a href="mailto:huangrenhuai@gmail.com?Subject=New%20model" target="_top">EMail</a>
+Other models: to request additional model, you may contact me by <a href="mailto:huangrenhuai@gmail.com?Subject=New%20model" target="_top">EMail</a>
 
 
 -----
