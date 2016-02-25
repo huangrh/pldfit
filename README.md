@@ -3,11 +3,11 @@
 # Protein-Ligand Biosensor Data Fitting in R
 -----
 ### Introduction    
-[R](https://cran.r-project.org/) is widely used in statistics analysis. A data frame is the most common way of storing data in [R](https://cran.r-project.org/). It is easy to convert biosensor data into a data frame. 
-The purpose of this package is to use [R](https://cran.r-project.org/) to develop novel models and fit the protein-ligand interaction data obtained from biosensor (both BLI and SPR). In this packages, we first developed a dimerization model and successfully applied it to determined the dimerization constant and kinetic parameters of von Willebrand factor propeptide [( for background ) ](http://www.pnas.org/content/105/2/482.full). 
+The purpose of this package is to use [R](https://cran.r-project.org/) to develop novel statistic models and to fit the protein-ligand interaction data obtained from biosensor (both BLI and SPR). [R](https://cran.r-project.org/) is widely used in statistic analysis. [R] also has advantage in large data process. For example, it often takes a lot of work to read biosensor data into certain program to analysis. However, it is easy to read biosensor data into a data frame, the most common method to store data in [R](https://cran.r-project.org/).  
+In this packages, we first developed a dimerization model and applied it to fit the BLI data of von Willebrand factor propeptide. We  successfully determined the dimerization constant and kinetic parameters of von Willebrand factor propeptide [( for background ) ](http://www.pnas.org/content/105/2/482.full). 
 
 -----
-There are two main biosensor techniques to study protein-ligand insteraction:  
+There are two major biosensor techniques in studying protein-ligand insteraction:  
 * Bio-layer interferometry (BLI) 
 * Surface plasmon resonance (SPR).  
 
