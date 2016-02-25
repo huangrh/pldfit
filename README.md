@@ -7,7 +7,7 @@
 The purpose of this package is to use [R](https://cran.r-project.org/) to develop novel models and fit the protein-ligand interaction data obtained from biosensor (both BLI and SPR). In this packages, we first developed a dimerization model and successfully applied it to determined the dimerization constant and kinetic parameters of von Willebrand factor propeptide [( for background ) ](http://www.pnas.org/content/105/2/482.full). 
 
 -----
-There are two popular biosensor techniques to study protein-ligand insteraction:  
+There are two main biosensor techniques to study protein-ligand insteraction:  
 * Bio-layer interferometry (BLI) 
 * Surface plasmon resonance (SPR).  
 
