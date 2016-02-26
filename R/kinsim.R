@@ -1,7 +1,8 @@
 ##============================================================================##
 ## wrapper of ysimple1to1, for concentration series.
 ## return a data frame including both xdata and calculated ydata.
-dfsimple1to1 <-
+#' @export
+kinsim <-
     function(par = par, dat = dat, noise = 0.01)
     {
         # take the data out from the list
@@ -9,6 +10,12 @@ dfsimple1to1 <-
         xdata   = dat$xdata
         ydata   = dat$ydata
         t2      = dat$t2
+        model   = dat$model
+
+        # choose a method
+        ysim = switch(model,
+                      simple1to1 = ysimple1to1,
+                      dimer = ydimer)
 
         example = matrix(0, ncol = length(concs), nrow = length(xdata))
         example = as.data.frame(example)
@@ -16,7 +23,7 @@ dfsimple1to1 <-
         example[] <- lapply(concs, function(conc)
         {
             conc = ifelse(xdata < t2, conc, 0);
-            ysimple1to1(par = par, conc=conc, xdata = xdata, ydata = ydata);
+            ysim(par = par, conc=conc, xdata = xdata, ydata = NULL);
 
         })
         # add noise

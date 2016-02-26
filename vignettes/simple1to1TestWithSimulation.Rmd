@@ -54,9 +54,10 @@ datsim$concs <- 1e-5 * (2^(0:5));
 datsim$xdata = seq(0, 300, length.out = 1501); # time 
 datsim$t2   = 150
 datsim$ydata = NULL
+datsim$model = "simple1to1"
 
 # simulation
-xySimulated <- dfsimple1to1(par = par, dat = datsim, noise = 0.01) 
+xySimulated <- kinsim(par = par, dat = datsim, noise = 0.01) 
 
 # plot the simulation
 # ySimulated$Time = time; 
@@ -96,7 +97,7 @@ fit$par # paramenters after fitting
 cbind(simulation= par, init = initPar_test, fitting = fit$par)
 
 #prodict and plot
-predFit <- dfsimple1to1(par = fit$par, dat = dat_test, noise = 0)
+predFit <- kinsim(par = fit$par, dat = dat_test, noise = 0)
 predFit <- reshape2::melt(predFit, id.vars = "Time")
 g + geom_line(data=predFit, aes(x = Time, y = value, group = variable) ) 
 
