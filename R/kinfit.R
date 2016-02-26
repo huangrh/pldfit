@@ -15,18 +15,58 @@
 #' datsim$ydata = NULL
 #'
 #' @export
-kinfit <- function(par= par, dat = dat, model = "simple1to1") {
+kinfit <- function(init = NULL,
+                   dat = NULL,
+                   concs = concs,
+                   t2 = t2,
+                   model = "simple1to1",
+                   bound = NULL)
+{
+    if (is.null(init)) stop("init is required when calling kinfit")
+    if (is.null(dat))  stop("dat is required when calling kinfit")
+    #
+    if (is.null(bound)) {
+        lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.01);
+        upperBound = list(kon =1e04, koff=1e04, rmax = 10);
+    } else {
+        lowerBound  <- as.numeric(bound$lowerBound);
+        upperBound  <- as.numeric(bound$upperBound);
+    }
+
+    # Reconstruct the dat_fit list that required by residArray.R,
+    dat_fit = list()
+    dat_fit$datF     = within(dat, rm("Time"));
+    dat_fit$t2       = t2;
+    dat_fit$concs    = concs;
+    dat_fit$xdata    = dat$Time; # time
+
+    # fitting
+    minpack.lm::nls.lm(par = init, # initial parameters
+                       lower=lowerBound,
+                       upper=upperBound,
+                       fn = residArray(model = model), # residual function
+                       jac = NULL,
+                       control = minpack.lm::nls.lm.control(),
+                       dat = dat_fit # a list containing the parameters and data
+    )
+}
+
+
+#' @export
+kinfit_ <- function(par= par, dat = dat, model = "simple1to1") {
     #
 
     lowerBound  <- as.numeric(dat$lowerBound);
     upperBound  <- as.numeric(dat$upperBound);
     #env_test$concs      = concs;
     #env_test$datF       = ySimulated;
-    minpack.lm::nls.lm(par = par,
+    fit <- minpack.lm::nls.lm(par = par,
                        lower=lowerBound,
                        upper=upperBound,
                        fn= residArray(model = model),
                        jac = NULL,
                        control = minpack.lm::nls.lm.control(),
                        dat = dat)
+    fit$model = model
+    out <- structure(fit$par, class = "kinfit")
 }

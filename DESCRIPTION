@@ -6,12 +6,15 @@ Date: 2016-01-14
 Author: Ren-Huai Huang, huangrenhuai@gmail.com
 Maintainer: Ren-Huai Huang <huangrenhuai@gmail.com>
 Description: More about what it does (maybe more than one line)
-Imports: minpack.lm,
-            reshape2,
-            ggplot2,
-            grid
+Imports:
+    minpack.lm,
+    reshape2,
+    ggplot2,
+    grid
 License: What license is it under?
 LazyData: TRUE
-Suggests: knitr,
+Suggests:
+    knitr,
     rmarkdown
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1

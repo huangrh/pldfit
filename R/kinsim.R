@@ -1,42 +1,91 @@
-##============================================================================##
-## wrapper of ysimple1to1, for concentration series.
-## return a data frame including both xdata and calculated ydata.
+#' kinetic simulation
+#'
+#' @param par parametes in a list, including kon, koff, rmax, cocns, t2, time
+#'
+#' @param model the binding model, "simple1to1" or dimerization model : "dimer"
+#' @param noise the noise level added to the simulated data
+#'
 #' @export
-kinsim <-
-    function(par = par, dat = dat, noise = 0.01)
+kinsim <- function(par = par,
+                   model = "simple1to1",
+                   noise = 0.01)
+{
+    # reconstruct the par_fit from par
+    par_fit = list()
+    par_fit$kon = par$kon
+    par_fit$koff = par$koff
+    par_fit$rmax =par$rmax
+    # additional parameter
+    concs   = par$concs
+    xdata   = par$time
+    ydata   = NULL
+    t2      = par$t2
+
+    # choose a method
+    ysim = switch(model,
+                  simple1to1 = ysimple1to1,
+                  dimer = ydimer)
+
+    results = matrix(0, ncol = length(concs), nrow = length(xdata))
+    results = as.data.frame(results)
+
+    results[] <- lapply(concs, function(conc)
     {
-        # take the data out from the list
-        concs   = dat$concs
-        xdata   = dat$xdata
-        ydata   = dat$ydata
-        t2      = dat$t2
-        model   = dat$model
+        conc = ifelse(xdata < t2, conc, 0);
+        ysim(par = par_fit, conc=conc, xdata = xdata, ydata = ydata);
 
-        # choose a method
-        ysim = switch(model,
-                      simple1to1 = ysimple1to1,
-                      dimer = ydimer)
-
-        example = matrix(0, ncol = length(concs), nrow = length(xdata))
-        example = as.data.frame(example)
-
-        example[] <- lapply(concs, function(conc)
-        {
-            conc = ifelse(xdata < t2, conc, 0);
-            ysim(par = par, conc=conc, xdata = xdata, ydata = NULL);
-
-        })
-        # add noise
-        if (noise) {
-            # default sd should set 0.01
-            example = example + rnorm(ncol(example)*nrow(example), sd = noise);
-        }
-
-        colnames(example) = concs
-        example$Time <- xdata
-        return(example)
+    })
+    # add noise
+    if (noise) {
+        # default sd should set 0.01
+        results = results + rnorm(ncol(results)*nrow(results), sd = noise);
     }
 
+    colnames(results) = concs
+    results$Time <- xdata
+    return(results)
+}
 
+
+#' @export
+predict.kinfit <- function(object,
+                   ,
+                   noise = 0.01)
+{
+    # reconstruct the par_fit from par
+    par_fit = list()
+    par_fit$kon = par$kon
+    par_fit$koff = par$koff
+    par_fit$rmax =par$rmax
+    # additional parameter
+    concs   = par$concs
+    xdata   = par$time
+    ydata   = NULL
+    t2      = par$t2
+
+    # choose a method
+    ysim = switch(model,
+                  simple1to1 = ysimple1to1,
+                  dimer = ydimer)
+
+    results = matrix(0, ncol = length(concs), nrow = length(xdata))
+    results = as.data.frame(results)
+
+    results[] <- lapply(concs, function(conc)
+    {
+        conc = ifelse(xdata < t2, conc, 0);
+        ysim(par = par_fit, conc=conc, xdata = xdata, ydata = ydata);
+
+    })
+    # add noise
+    if (noise) {
+        # default sd should set 0.01
+        results = results + rnorm(ncol(results)*nrow(results), sd = noise);
+    }
+
+    colnames(results) = concs
+    results$Time <- xdata
+    return(results)
+}
 
 

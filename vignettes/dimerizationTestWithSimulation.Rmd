@@ -57,16 +57,17 @@ require(pldfit)
 ## 2. Simulation & plotting: 
 ```{r}
 # simulate the data use the following parameters
-par = list(kon  = 2e2, koff = 1e-2, rmax = 1)
-datsim = list()
-datsim$concs <- 1e-5 * (2^(0:5));
-datsim$xdata = seq(0, 300, length.out = 1501); # time 
-datsim$t2   = 150
-datsim$ydata = NULL
-datsim$model = "dimer"
+# simulate the data use the following parameters
+par = list(kon    = 2e2, 
+           koff   = 1e-2, 
+           rmax   = 1,
+           concs  = 1e-5 * (2^(0:5)),
+           time   = seq(0, 300, length.out = 1501),
+           t2     = 150)
 
 # simulation
-xySimulated <- kinsim(par = par, dat = datsim, noise = 0.01) 
+model = "dimer"
+xySimulated <- kinsim(par = par, model = model, noise = 0.01) 
 
 # plot the simulation
 # ySimulated$Time = time; 
@@ -91,21 +92,22 @@ print(g)
 ```{r}
 # init
 initPar_test = list(kon =1, koff = 1, rmax = 1) 
-dat_test <- datsim
+dat_test$concs <- par$concs
 dat_test$t2 <- 149.9 # t2 is the beginning of the diassociation. 
 dat_test$lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.01);
 dat_test$upperBound = list(kon =1e04, koff=1e04, rmax = 10);
 dat_test$datF       = within(xySimulated, rm("Time")); 
 
 # Fit
-fit <- kinfit(par = initPar_test, dat = dat_test, model = "dimer")
+fit <- kinfit_(par = initPar_test, dat = dat_test, model = "dimer")
 names(fit)
 par # simulation parameters
 fit$par # paramenters after fitting
 cbind(simulation= par, init = initPar_test, fitting = fit$par)
 
 #prodict and plot
-predFit <- kinsim(par = fit$par, dat = dat_test, noise = 0)
+
+predFit = kinsim(par = fit$par, model = model, noise = 0) 
 predFit <- reshape2::melt(predFit, id.vars = "Time")
 g + geom_line(data=predFit, aes(x = Time, y = value, group = variable) ) 
 ```
