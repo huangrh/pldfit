@@ -33,22 +33,17 @@ kinfit <- function(init = NULL,
         upperBound  <- as.numeric(bound$upperBound);
     }
 
-    # Reconstruct the dat_fit list that required by residArray.R,
+    # Reconstruct a list dat_fit  that required by residArray.R,
     dat_fit = list()
-    dat_fit$datF     = within(dat, rm("Time"));
-    dat_fit$t2       = t2;
-    dat_fit$concs    = concs;
-    dat_fit$xdata    = dat$Time; # time
+    dat_fit$concs = concs
+    dat_fit$xdata  = dat$Time
+    dat_fit$t2 <- t2 # t2 is the beginning of the diassociation.
+    dat_fit$lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.01);
+    dat_fit$upperBound = list(kon =1e04, koff=1e04, rmax = 10);
+    dat_fit$datF       = within(dat, rm("Time"));
 
     # fitting
-    minpack.lm::nls.lm(par = init, # initial parameters
-                       lower=lowerBound,
-                       upper=upperBound,
-                       fn = residArray(model = model), # residual function
-                       jac = NULL,
-                       control = minpack.lm::nls.lm.control(),
-                       dat = dat_fit # a list containing the parameters and data
-    )
+    kinfit_(par = init, dat = dat_fit, model = model)
 }
 
 
@@ -68,5 +63,9 @@ kinfit_ <- function(par= par, dat = dat, model = "simple1to1") {
                        control = minpack.lm::nls.lm.control(),
                        dat = dat)
     fit$model = model
-    out <- structure(fit$par, class = "kinfit")
+    fit$par$concs = dat$concs
+    fit$par$time  = dat$xdata
+    fit$par$t2    = dat$t2
+    out <- structure(fit, class = "kinfit")
+    return(out)
 }

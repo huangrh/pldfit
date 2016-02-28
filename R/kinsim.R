@@ -49,7 +49,7 @@ kinsim <- function(par = par,
 
 #' @export
 predict.kinfit <- function(object,
-                   ,
+                   newdata,
                    noise = 0.01)
 {
     # reconstruct the par_fit from par
