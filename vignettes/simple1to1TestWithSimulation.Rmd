@@ -94,7 +94,8 @@ fit$par[1:3] # paramenters after fitting
 cbind(simulation= par, init = initPar_test, fitting = fit$par)
 
 #prodict and plot
-predFit <- kinsim(par = fit$par, model = model, noise = 0)
+
+predFit <- predict(fit, concs)
 predFit <- reshape2::melt(predFit, id.vars = "Time")
 g + geom_line(data=predFit, aes(x = Time, y = value, group = variable) ) 
 ```

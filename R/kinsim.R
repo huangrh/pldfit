@@ -70,27 +70,28 @@ kinsim <- function(par,
     return(results)
 }
 
-
+#' Predict method for Kinetic Model Fits
+#'
+#' Predict the responses (nm) correponding to concentrations based on a kinfit object.
+#'
+#' @param object An kinfit object returned from \code{\link{kinfit}}.
+#' @param newdata
+#'
 #' @export
 #' @method predict kinfit
 predict.kinfit <- function(object,
-                   newdata
+                   new_concs,
+                   noise = c(0, 0.01)
                    )
 {
-    # reconstruct the par_fit from par
-    par_fit = list()
-    par_fit$kon = par$kon
-    par_fit$koff = par$koff
-    par_fit$rmax =par$rmax
-    # additional parameter
-    concs   = object$par$concs
-    xdata   = object$par$time
-    ydata   = NULL
-    t2      = object$par$t2
 
-    kinsim(par = par,
-           model = "simple1to1",
-           noise = 0)
+    # additional parameter
+    if (!missing(new_concs) ) {
+        object$par$concs = as.vector(new_concs)
+    }
+    kinsim(par = object$par,
+           model = object$model,
+           noise = noise[1])
 
 
 }
