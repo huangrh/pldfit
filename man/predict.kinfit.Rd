@@ -9,7 +9,8 @@
 \arguments{
 \item{object}{An kinfit object returned from \code{\link{kinfit}}.}
 
-\item{newdata}{}
+\item{new_concs}{A vector of new concentrations at which the responses is calculated
+respectively.}
 }
 \description{
 Predict the responses (nm) correponding to concentrations based on a kinfit object.

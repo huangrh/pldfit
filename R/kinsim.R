@@ -75,7 +75,8 @@ kinsim <- function(par,
 #' Predict the responses (nm) correponding to concentrations based on a kinfit object.
 #'
 #' @param object An kinfit object returned from \code{\link{kinfit}}.
-#' @param newdata
+#' @param new_concs A vector of new concentrations at which the responses is calculated
+#' respectively.
 #'
 #' @export
 #' @method predict kinfit
