@@ -1,6 +1,8 @@
-#' Fitting Protein-Ligand Sensorgram Data
+#' Data Fitting of Protein-Ligand Sensorgram
 #'
-#' kinfit is used to fit kinetic data.
+#'
+#' kinfit is for fitting a biosensor kinetic data.
+#'
 #'
 #' @param par The initial parameters to be fitted.
 #' @param dat A data frame. The first column in the data frame is "Time" followed
@@ -12,8 +14,19 @@
 #' @param model The model. Choose the model from "simple1to1" or "dimer".
 #' @param bound The upper and lower limits of the parameters used in fitting.
 #' It should match with the corresponding parameters of par.
+#' @param jac A function to return the Jacobian for the fn function.
+#'  see \code(\link[minpack.lm]{nls.lm}} for detail.
+#' @param control An optional list of control settings.
+#' See \code{\link[minpack.lm]{nls.lm}} and \code{\link[minpack.lm]{nls.lm.control}}
+#' for the names of the settable control values and their effect.
 #'
-#' @return the fitting results returned by minpack.lm::nls.lm
+#' @return A list with components returned from minpack.lm::nls.lm, including par,
+#' hessian, fvec, info, message, diag, niter, rsstrace and deviance.
+#' see \code{\link[minpack.lm]{nls.lm}}.
+#'
+#' The par component also includes "concs", "t2", and "time", which is taken from
+#' the input variables.
+#'
 #' @examples
 #' # Simulation  ----------------------------------------------------------
 #' Do a simulation first before the perform the following fitting.
@@ -68,7 +81,9 @@ kinfit <- function(par,
                    concs = concs,
                    t2 = t2,
                    model = c("simple1to1","dimer"),
-                   bound = NULL)
+                   bound = NULL,
+                   jac = NULL,
+                   control = minpack.lm::nls.lm.control())
 {
     if (missing(par)) stop("par is missing when calling kinfit")
     if (missing(dat))  stop("dat is missing when calling kinfit")
@@ -81,36 +96,43 @@ kinfit <- function(par,
         upperBound  <- as.numeric(bound$upperBound);
     }
 
-    # Reconstruct a list dat_fit  that required by residArray.R,
+    # Reconstruct a list "dat_fit"  that required by fn residArray.R,
     dat_fit = list()
     dat_fit$concs = concs
     dat_fit$xdata  = dat$Time
     dat_fit$t2 <- t2 # t2 is the beginning of the diassociation.
-    dat_fit$lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.01);
-    dat_fit$upperBound = list(kon =1e04, koff=1e04, rmax = 10);
+    dat_fit$lowerBound = lowerBound;
+    dat_fit$upperBound = upperBound;
     dat_fit$datF       = within(dat, rm("Time"));
 
     # fitting
-    kinfit_(par = par, dat = dat_fit, model = model[1])
+    kinfit_(par = par,
+            dat = dat_fit,
+            model = model[1],
+            jac = jac,
+            control = control)
 }
 
 
 #' @export
-kinfit_ <- function(par= par, dat = dat, model = "simple1to1") {
+kinfit_ <- function(par= par,
+                    dat = dat,
+                    model = c("simple1to1", "dimer"),
+                    jac = NULL,
+                    control = minpack.lm::nls.lm.control() ) {
     #
-
     lowerBound  <- as.numeric(dat$lowerBound);
     upperBound  <- as.numeric(dat$upperBound);
-    #env_test$concs      = concs;
-    #env_test$datF       = ySimulated;
+
+    #
     fit <- minpack.lm::nls.lm(par = par,
-                       lower=lowerBound,
-                       upper=upperBound,
-                       fn= residArray(model = model[1]),
-                       jac = NULL,
-                       control = minpack.lm::nls.lm.control(),
-                       dat = dat)
-    fit$model = model
+                              lower=lowerBound,
+                              upper=upperBound,
+                              fn= residArray(model = model[1]),
+                              jac = jac,
+                              control = minpack.lm::nls.lm.control(),
+                              dat = dat)
+    fit$model     = model
     fit$par$concs = dat$concs
     fit$par$time  = dat$xdata
     fit$par$t2    = dat$t2

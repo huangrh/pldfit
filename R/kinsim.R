@@ -1,9 +1,16 @@
-#' kinetic simulation
+#' Kinetic Simulation of Protein-Ligand Sensorgram Data
 #'
-#' @param par parametes in a list, including kon, koff, rmax, cocns, t2, time
+#' kinsim generates a sensorgram data according to the input parameters, kon, koff,
+#' rmax, concs, t2, time and the chosen model.
 #'
-#' @param model the binding model, "simple1to1" or dimerization model : "dimer"
-#' @param noise the noise level added to the simulated data
+#' @param par A list of parametes, including kon, koff, rmax, concs, t2, time
+#'
+#' @param model The binding model, "simple1to1" or dimerization model : "dimer"
+#' @param noise The noise level added to the simulated data
+#'
+#' @return kinsim returns an data frame. The first column of the data frame is
+#'   "Time", which is the same the input variable time, and it is followed by the
+#'   calculated responses corresponding to each concentration of the concs variable
 #'
 #' @examples
 #' # Simulation  ----------------------------------------------------------
