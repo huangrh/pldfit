@@ -1,29 +1,77 @@
-#' minimize the residFun using nls.lm
+#' Fitting Protein-Ligand Sensorgram Data
 #'
-#' @param par the initial parameters to be fitted
-#' @param dat the data in a list, which include a
-#' @param model the model
+#' kinfit is used to fit kinetic data.
+#'
+#' @param par The initial parameters to be fitted.
+#' @param dat A data frame. The first column in the data frame is "Time" followed
+#'  by the response (nm) recorded from a biosensor experiment or from a simulation
+#'  at the corresponding concentration of the ligand.
+#' @param concs The oncentrations. It is usally a series of two-times dilution
+#'  of the ligand concentration.
+#' @param t2 The beggining of dissociation.
+#' @param model The model. Choose the model from "simple1to1" or "dimer".
+#' @param bound The upper and lower limits of the parameters used in fitting.
+#' It should match with the corresponding parameters of par.
 #'
 #' @return the fitting results returned by minpack.lm::nls.lm
 #' @examples
-#' # simulation
-#' par = list(kon  = 2e2, koff = 1e-2, rmax = 1)
-#' datsim = list()
-#' datsim$concs <- 1e-5 * (2^(0:5));
-#' datsim$xdata = seq(0, 300, length.out = 1501); # time
-#' datsim$t2   = 150
-#' datsim$ydata = NULL
+#' # Simulation  ----------------------------------------------------------
+#' Do a simulation first before the perform the following fitting.
+#' \code{\link{kinsim}}
+#'
+#'
+#' # Fit the simulated data into the corresponding model--------------------
+#'
+#' # Prepare fitting parameters
+#' initPar_test = list(kon =1, koff = 1, rmax = 1)
+#' t2  = par$t2 # t2 is the beginning of the diassociation.
+#' concs        = par$concs
+#' dat          = xySimulated
+#'
+# # Fitting
+#' fit <- kinfit(par = initPar_test, dat = dat, concs = concs, t2 = t2, model = "simple1to1")
+#' names(fit)
+#'
+#' cbind(simulation= par, init = initPar_test, fitting = fit$par)
+#'
+#' # Predict  -------------------------------------------------------------
+#' predFit <- kinsim(par = fit$par, model = model, noise = 0)
+#'
+#'
+#' # Plot -----------------------------------------------------------------
+#'
+#' # Plotting the simulation
+#' xy <-reshape2::melt(data = xySimulated,
+#' id.vars = "Time",
+#' measure.vars = rev(1:6),
+#' variable.name = "Conc")
+#'
+#' g <- ggplot()  + xlab("Time (sec)") + ylab("Response (nm)") +
+#'     labs(linetype= 'title') +
+#'    ylim(-0.025,1) +
+#'    theme_classic() +
+#'    theme(legend.position=c(0.9, 0.65),
+#'          legend.text=element_text(size = rel(1)),
+#'          legend.key.size=unit(0.9,"line"));
+#' g <- g + geom_line(data = xy, aes(x = Time, y = value, color = Conc));
+#' print(g)
+#'
+#' # Plotting the prediction from the fitted parameters
+#' predFit <- reshape2::melt(predFit, id.vars = "Time")
+#' g + geom_line(data=predFit, aes(x = Time, y = value, group = variable) )
+#'
+#' @seealso \code{\link{kinsim}}
 #'
 #' @export
-kinfit <- function(init = NULL,
-                   dat = NULL,
+kinfit <- function(par,
+                   dat,
                    concs = concs,
                    t2 = t2,
-                   model = "simple1to1",
+                   model = c("simple1to1","dimer"),
                    bound = NULL)
 {
-    if (is.null(init)) stop("init is required when calling kinfit")
-    if (is.null(dat))  stop("dat is required when calling kinfit")
+    if (missing(par)) stop("par is missing when calling kinfit")
+    if (missing(dat))  stop("dat is missing when calling kinfit")
     #
     if (is.null(bound)) {
         lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.01);
@@ -43,7 +91,7 @@ kinfit <- function(init = NULL,
     dat_fit$datF       = within(dat, rm("Time"));
 
     # fitting
-    kinfit_(par = init, dat = dat_fit, model = model)
+    kinfit_(par = par, dat = dat_fit, model = model[1])
 }
 
 
@@ -58,7 +106,7 @@ kinfit_ <- function(par= par, dat = dat, model = "simple1to1") {
     fit <- minpack.lm::nls.lm(par = par,
                        lower=lowerBound,
                        upper=upperBound,
-                       fn= residArray(model = model),
+                       fn= residArray(model = model[1]),
                        jac = NULL,
                        control = minpack.lm::nls.lm.control(),
                        dat = dat)

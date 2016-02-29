@@ -1,6 +1,4 @@
-#'
-#'
-#'
+
 ydimer <- function(par = par, conc=conc, xdata=time, ydata = NULL) {
 
     # fiting params

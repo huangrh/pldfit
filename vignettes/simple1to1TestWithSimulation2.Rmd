@@ -88,7 +88,7 @@ concs        = par$concs
 dat          = xySimulated
 
 # Fit
-fit <- kinfit(init = initPar_test, dat = dat, concs = concs, t2 = t2, model = "simple1to1")
+fit <- kinfit(par = initPar_test, dat = dat, concs = concs, t2 = t2, model = "simple1to1")
 names(fit)
 par # simulation parameters
 fit$par # paramenters after fitting
