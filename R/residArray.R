@@ -1,5 +1,4 @@
 ### define the residual function
-#' @export
 residArray = function(model = "simple1to1"){
     residArray_ = function(par = par, dat = dat)
     {

@@ -15,7 +15,7 @@
 #' @param bound The upper and lower limits of the parameters used in fitting.
 #' It should match with the corresponding parameters of par.
 #' @param jac A function to return the Jacobian for the fn function.
-#'  see \code(\link[minpack.lm]{nls.lm}} for detail.
+#'  see \code{\link[minpack.lm]{nls.lm}} for detail.
 #' @param control An optional list of control settings.
 #' See \code{\link[minpack.lm]{nls.lm}} and \code{\link[minpack.lm]{nls.lm.control}}
 #' for the names of the settable control values and their effect.
@@ -85,57 +85,62 @@ kinfit <- function(par,
                    jac = NULL,
                    control = minpack.lm::nls.lm.control())
 {
-    if (missing(par)) stop("par is missing when calling kinfit")
-    if (missing(dat))  stop("dat is missing when calling kinfit")
+    if (missing(par))    stop("par is missing when calling kinfit")
+    if (missing(dat))    stop("dat is missing when calling kinfit")
+    if (missing(t2))     stop("t2 is missing when calling kinfit")
+    if (missing(concs))  stop("concs is missing when calling kinfit")
     #
     if (is.null(bound)) {
-        lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.01);
-        upperBound = list(kon =1e04, koff=1e04, rmax = 10);
+        lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.001);
+        upperBound = list(kon =1e04, koff=1e04, rmax = 100);
     } else {
         lowerBound  <- as.numeric(bound$lowerBound);
         upperBound  <- as.numeric(bound$upperBound);
     }
 
+    # fitting
+    kinfit_(par   = par,
+            dat   = dat,
+            concs = concs,
+            t2    = t2,
+            model = model[1],
+            lower = lowerBound,
+            upper = upperBound,
+            jac = jac,
+            control = control)
+}
+
+#
+kinfit_ <- function(par= par,
+                    dat = dat,
+                    concs,
+                    t2,
+                    model = c("simple1to1", "dimer"),
+                    lower = lower,
+                    upper = upper,
+                    jac = NULL,
+                    control = minpack.lm::nls.lm.control() ) {
+
+    #
     # Reconstruct a list "dat_fit"  that required by fn residArray.R,
     dat_fit = list()
     dat_fit$concs = concs
     dat_fit$xdata  = dat$Time
     dat_fit$t2 <- t2 # t2 is the beginning of the diassociation.
-    dat_fit$lowerBound = lowerBound;
-    dat_fit$upperBound = upperBound;
     dat_fit$datF       = within(dat, rm("Time"));
 
-    # fitting
-    kinfit_(par = par,
-            dat = dat_fit,
-            model = model[1],
-            jac = jac,
-            control = control)
-}
-
-
-#' @export
-kinfit_ <- function(par= par,
-                    dat = dat,
-                    model = c("simple1to1", "dimer"),
-                    jac = NULL,
-                    control = minpack.lm::nls.lm.control() ) {
-    #
-    lowerBound  <- as.numeric(dat$lowerBound);
-    upperBound  <- as.numeric(dat$upperBound);
-
-    #
     fit <- minpack.lm::nls.lm(par = par,
-                              lower=lowerBound,
-                              upper=upperBound,
+                              lower = as.numeric(lower),
+                              upper = as.numeric(upper),
                               fn= residArray(model = model[1]),
                               jac = jac,
                               control = minpack.lm::nls.lm.control(),
-                              dat = dat)
+                              dat = dat_fit)
     fit$model     = model
-    fit$par$concs = dat$concs
-    fit$par$time  = dat$xdata
-    fit$par$t2    = dat$t2
+    fit$par$concs = concs
+    fit$par$time  = dat$Time
+    fit$par$t2    = t2
+    fit$dat       = dat
     out <- structure(fit, class = "kinfit")
     return(out)
 }

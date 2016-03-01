@@ -1,15 +1,15 @@
 Package: pldfit
 Type: Package
 Title: SensorGram kinetic data fitting, especialy for BLI and SPR data
-Version: 0.1
+Version: 0.1.1.9000
 Date: 2016-01-14
 Author: Ren-Huai Huang, huangrenhuai@gmail.com
 Maintainer: Ren-Huai Huang <huangrenhuai@gmail.com>
 Description: More about what it does (maybe more than one line)
 Imports:
-    minpack.lm,
-    reshape2,
-    ggplot2,
+    minpack.lm (>= 1.2-0),
+    reshape2 (>= 1.4.1),
+    ggplot2 (>= 2.0.0),
     grid
 License: What license is it under?
 LazyData: TRUE

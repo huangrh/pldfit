@@ -24,6 +24,9 @@ of the ligand concentration.}
 \item{bound}{The upper and lower limits of the parameters used in fitting.
 It should match with the corresponding parameters of par.}
 
+\item{jac}{A function to return the Jacobian for the fn function.
+see \code{\link[minpack.lm]{nls.lm}} for detail.}
+
 \item{control}{An optional list of control settings.
 See \code{\link[minpack.lm]{nls.lm}} and \code{\link[minpack.lm]{nls.lm.control}}
 for the names of the settable control values and their effect.}

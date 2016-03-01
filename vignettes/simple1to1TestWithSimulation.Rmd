@@ -10,7 +10,7 @@ vignette: >
 ---
 
 ## Simple one to one model:  
-
+<font size = "3">
 $A + L \overset{k_{on}}{\underset{k_{off}}\rightleftarrows} AL$  
 
 * A: the protein to be analyzed. 
@@ -34,7 +34,9 @@ ${d[AL] \over dt} = k_{on}  [A]  [L] - k_{off}  [AL]$
     + Response (nm): $R = [AL] = y$    
     + Ligand on the sensor: $[L] = R_{max} - R$  
     + Conc. of the analytes: $C = [conc] = [A]$  
-    + $R_{max} = [AL] + [L]$  
+    + $R_{max} = [AL] + [L]$   
+    
+</font>
 -----
     
 ```{r, echo = FALSE, results = FALSE, message = FALSE}
@@ -70,10 +72,10 @@ g <- ggplot()  + xlab("Time (sec)") + ylab("Response (nm)") +
     labs(linetype= 'title') + 
     ylim(-0.025,1) + 
     theme_classic() + 
-    theme(legend.position=c(0.9, 0.65),
-          legend.text=element_text(size = rel(1)),
-          legend.key.size=unit(0.9,"line"));
-g <- g + geom_line(data = xy, aes(x = Time, y = value, color = Conc));
+    theme(legend.position=c(0.9, 0.65), 
+          legend.text=element_text(size = rel(1)), 
+          legend.key.size=unit(0.9,"line")); 
+g <- g + geom_line(data = xy, aes(x = Time, y = value, color = Conc)); 
 print(g)
 ```
 
@@ -81,10 +83,14 @@ print(g)
 ```{r}
 
 # init
-initPar_test = list(kon =1, koff = 1, rmax = 1) 
-t2  = par$t2 # t2 is the beginning of the diassociation. 
-concs        = par$concs
-dat          = xySimulated
+initPar_test = list(kon =1, koff = 1, rmax = 1)  
+t2  = par$t2 # t2 is the beginning of the diassociation.  
+concs        = par$concs 
+dat          = xySimulated 
+str(dat) 
+names(dat) 
+colnames(dat) 
+concs 
 
 # Fit
 fit <- kinfit(par = initPar_test, dat = dat, concs = concs, t2 = t2, model = "simple1to1")
