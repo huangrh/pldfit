@@ -2,10 +2,11 @@
 % Please edit documentation in R/kinfit.R
 \name{kinfit}
 \alias{kinfit}
-\title{Data Fitting of Protein-Ligand Sensorgram}
+\title{Kinetic Data Fitting of Protein-Ligand Sensorgram}
 \usage{
 kinfit(par, dat, concs = concs, t2 = t2, model = c("simple1to1", "dimer"),
-  bound = NULL, jac = NULL, control = minpack.lm::nls.lm.control())
+  lower = NULL, upper = NULL, jac = NULL,
+  control = minpack.lm::nls.lm.control())
 }
 \arguments{
 \item{par}{The initial parameters to be fitted.}
@@ -21,15 +22,15 @@ of the ligand concentration.}
 
 \item{model}{The model. Choose the model from "simple1to1" or "dimer".}
 
-\item{bound}{The upper and lower limits of the parameters used in fitting.
-It should match with the corresponding parameters of par.}
-
 \item{jac}{A function to return the Jacobian for the fn function.
 see \code{\link[minpack.lm]{nls.lm}} for detail.}
 
 \item{control}{An optional list of control settings.
 See \code{\link[minpack.lm]{nls.lm}} and \code{\link[minpack.lm]{nls.lm.control}}
 for the names of the settable control values and their effect.}
+
+\item{bound}{The upper and lower limits of the parameters used in fitting.
+It should match with the corresponding parameters of par.}
 }
 \value{
 A list with components returned from minpack.lm::nls.lm, including par,

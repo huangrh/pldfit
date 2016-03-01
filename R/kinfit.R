@@ -1,4 +1,4 @@
-#' Data Fitting of Protein-Ligand Sensorgram
+#' Kinetic Data Fitting of Protein-Ligand Sensorgram
 #'
 #'
 #' kinfit is for fitting a biosensor kinetic data.
@@ -81,7 +81,8 @@ kinfit <- function(par,
                    concs = concs,
                    t2 = t2,
                    model = c("simple1to1","dimer"),
-                   bound = NULL,
+                   lower = NULL,
+                   upper = NULL,
                    jac = NULL,
                    control = minpack.lm::nls.lm.control())
 {
@@ -89,39 +90,11 @@ kinfit <- function(par,
     if (missing(dat))    stop("dat is missing when calling kinfit")
     if (missing(t2))     stop("t2 is missing when calling kinfit")
     if (missing(concs))  stop("concs is missing when calling kinfit")
-    #
-    if (is.null(bound)) {
-        lowerBound = list(kon =1e-04, koff=1e-04, rmax = 0.001);
-        upperBound = list(kon =1e04, koff=1e04, rmax = 100);
-    } else {
-        lowerBound  <- as.numeric(bound$lowerBound);
-        upperBound  <- as.numeric(bound$upperBound);
-    }
-
-    # fitting
-    kinfit_(par   = par,
-            dat   = dat,
-            concs = concs,
-            t2    = t2,
-            model = model[1],
-            lower = lowerBound,
-            upper = upperBound,
-            jac = jac,
-            control = control)
-}
-
-#
-kinfit_ <- function(par= par,
-                    dat = dat,
-                    concs,
-                    t2,
-                    model = c("simple1to1", "dimer"),
-                    lower = lower,
-                    upper = upper,
-                    jac = NULL,
-                    control = minpack.lm::nls.lm.control() ) {
 
     #
+    if (is.null(lower)) lower = list(kon =1e-04, koff=1e-04, rmax = 0.01)
+    if (is.null(upper)) upper = list(kon =1e04,  koff=1e04,  rmax = 10)
+
     # Reconstruct a list "dat_fit"  that required by fn residArray.R,
     dat_fit = list()
     dat_fit$concs = concs

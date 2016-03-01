@@ -8,7 +8,7 @@ ydimer <- function(par = par, conc=conc, xdata=time, ydata = NULL) {
 
     # conc correction for dimerization
     kd2 <- koff/kon
-    conc <- ifelse(conc == 0, 0, (sqrt( kd2 * kd2 + 4 * kd2 * conc) - kd2)/2)
+    conc <- ifelse(conc == 0, 0, (sqrt( kd2 * kd2 + 8 * kd2 * conc) - kd2)/4)
 
     # dt: time intervals
     len <- length(xdata);
