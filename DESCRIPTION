@@ -11,7 +11,7 @@ Imports:
     reshape2 (>= 1.4.1),
     ggplot2 (>= 2.0.0),
     grid
-License: What license is it under?
+License: GPL (>= 2)?
 LazyData: TRUE
 Suggests:
     knitr,

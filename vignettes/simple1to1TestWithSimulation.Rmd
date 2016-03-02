@@ -11,7 +11,7 @@ vignette: >
 
 ## Simple one to one model:  
 <font size = "3">
-$A + L \overset{k_{on}}{\underset{k_{off}}\rightleftarrows} AL$  
+$A + L \overset{k_{on}}{\underset{k_{off}}\rightleftarrows} AL\;\; (K_d = k_{off}/K_{on})$  
 
 * A: the protein to be analyzed. 
 * L: Ligand immobilized on the pin
@@ -79,7 +79,7 @@ g <- g + geom_line(data = xy, aes(x = Time, y = value, color = Conc));
 print(g)
 ```
 
-## Fitting
+## Kinetic Fitting
 ```{r}
 
 # init
@@ -108,4 +108,27 @@ cbind(simulation= par, init = initPar_test, fitting = fit$par)
 predFit <- predict(fit, concs)
 predFit <- reshape2::melt(predFit, id.vars = "Time")
 g + geom_line(data=predFit, aes(x = Time, y = value, group = variable) ) 
+
+
 ```
+
+## Equilibrium Fitting
+```{r}
+# 
+dat    = xySimulated
+concs  = par$concs
+scale  = 1e3
+fit <- ssgfit(datF = dat, 
+              concs = concs * scale,  
+              start = list(Rmax = 0.5, Kd=1),
+              width = 5,
+              t2    = 149.5,
+              model = "simple1to1")
+coef(fit)
+with(par, koff/kon *scale)
+plot(fit$datF[1:2])
+par$concs * scale
+lines(fit$predict, lty = 2)
+
+```
+
