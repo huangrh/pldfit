@@ -78,8 +78,8 @@
 #' @export
 kinfit <- function(par,
                    dat,
-                   concs = concs,
-                   t2 = t2,
+                   concs,
+                   t2,
                    model = c("simple1to1","dimer"),
                    lower = NULL,
                    upper = NULL,
@@ -92,8 +92,8 @@ kinfit <- function(par,
     if (missing(concs))  stop("concs is missing when calling kinfit")
 
     #
-    if (is.null(lower)) lower = list(kon =1e-04, koff=1e-04, rmax = 0.01)
-    if (is.null(upper)) upper = list(kon =1e04,  koff=1e04,  rmax = 10)
+    if (is.null(lower)) lower = list(kon =1e-05, koff=1e-05, rmax = 0.001)
+    if (is.null(upper)) upper = list(kon =1e05,  koff=1e05,  rmax = 100)
 
     # Reconstruct a list "dat_fit"  that required by fn residArray.R,
     dat_fit = list()
@@ -102,6 +102,7 @@ kinfit <- function(par,
     dat_fit$t2 <- t2 # t2 is the beginning of the diassociation.
     dat_fit$datF       = within(dat, rm("Time"));
 
+    #
     fit <- minpack.lm::nls.lm(par = par,
                               lower = as.numeric(lower),
                               upper = as.numeric(upper),
