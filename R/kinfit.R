@@ -115,6 +115,6 @@ kinfit <- function(par,
     fit$par$time  = dat$Time
     fit$par$t2    = t2
     fit$dat       = dat
-    out <- structure(fit, class = "kinfit")
+    out <- structure(fit, class = c(class(fit), "kinfit"))
     return(out)
 }

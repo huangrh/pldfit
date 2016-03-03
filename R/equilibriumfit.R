@@ -45,8 +45,17 @@ ssgfit <- function(datF,
                            sd = as.numeric(dat$sd))
     fit$predict <- data.frame(xData = seq(min(xData), max(xData), len=100 ))
     fit$predict$yData <- predict(fit, newdata=fit$predict)
-
+    class(fit) <- c(class(fit), "ssgfit")
     return(fit)
+}
+
+#' Plot Average Response (nm) vs Concentration ()
+#'
+#' @export
+plot.ssgfit <- function(obj) {
+    plot(obj$datF[1:2])
+    lines(obj$predict, lty = 2, col = "blue")
+    title(main = "Equilibrium Fitting", xlab = "Concs (mM)", ylab = "Response (nm)")
 }
 
 
