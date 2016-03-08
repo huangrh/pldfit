@@ -1,4 +1,4 @@
-[![Travis-CI Build Status](https://travis-ci.org/huangrh/pldfit.svg?branch=master)](https://travis-ci.org/huangrenhuai/pldfit)
+[![Travis-CI Build Status](https://travis-ci.org/huangrh/pldfit.svg?branch=master)](https://travis-ci.org/huangrh/pldfit)
 
 # Protein-Ligand Biosensor Data Fitting in R
 -----
