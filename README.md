@@ -1,4 +1,4 @@
-[![Travis-CI Build Status](https://travis-ci.org/huangrenhuai/pldfit.svg?branch=master)](https://travis-ci.org/huangrenhuai/pldfit)
+[![Travis-CI Build Status](https://travis-ci.org/huangrh/pldfit.svg?branch=master)](https://travis-ci.org/huangrenhuai/pldfit)
 
 # Protein-Ligand Biosensor Data Fitting in R
 -----
@@ -37,9 +37,9 @@ To get the currect development version from github:
 -----
 ### Model equation & simulation examples:   
 
-[Equation & algotithm](https://huangrenhuai.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html)
+[Equation & algotithm](https://huangrh.github.io/pldfit/vignettes/Protein-Ligand%20Biosensor%20Data%20Fitting.html)
 
-[Simple one to one model: simulation & fitting](https://huangrenhuai.github.io/pldfit/vignettes/Simple%20One%20to%20One%20Binding_%20Simulation.html)
+[Simple one to one model: simulation & fitting](https://huangrh.github.io/pldfit/vignettes/Simple%20One%20to%20One%20Binding_%20Simulation.html)
 
-[Dimerization model: simulation & fitting](https://huangrenhuai.github.io/pldfit/vignettes/Dimerization%20Model_%20Simulation%20%26%20Fitting.html)
+[Dimerization model: simulation & fitting](https://huangrh.github.io/pldfit/vignettes/Dimerization%20Model_%20Simulation%20%26%20Fitting.html)
 
