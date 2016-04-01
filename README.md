@@ -1,6 +1,6 @@
 [![Travis-CI Build Status](https://travis-ci.org/huangrh/pldfit.svg?branch=master)](https://travis-ci.org/huangrh/pldfit)
 
-# Protein-Ligand Biosensor Data Fitting in R
+# Protein-Ligand Biosensor Data Process in R
 -----
 ### Introduction    
 The purpose of this package is to use [R](https://cran.r-project.org/) to develop novel statistic models and to fit the protein-ligand interaction data obtained from biosensor (both BLI and SPR). [R](https://cran.r-project.org/) is widely used in statistic analysis. [R] also has advantage in large data process. For example, it often takes a lot of work to read biosensor data into certain program to analysis. However, it is easy to read biosensor data into a data frame, the most common method to store data in [R](https://cran.r-project.org/).  
