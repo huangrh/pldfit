@@ -3,7 +3,7 @@
 # Protein-Ligand Biosensor Data Process in R
 -----
 ### Introduction    
-The purpose of this package is to use [R](https://cran.r-project.org/) to develop novel statistic models and to fit the protein-ligand interaction data obtained from biosensor (both BLI and SPR). [R](https://cran.r-project.org/) is widely used in statistic analysis. [R] also has advantage in large data process. For example, it often takes a lot of work to read biosensor data into certain program to analysis. However, it is easy to read biosensor data into a data frame, the most common method to store data in [R](https://cran.r-project.org/).  
+The purpose of this package is to use [R](https://github.com/huangrh/rug/blob/master/RenHuai20160517RUG.pdf) to develop novel statistic models and to fit the protein-ligand interaction data obtained from biosensor (both BLI and SPR). [R](https://github.com/huangrh/rug/blob/master/RenHuai20160517RUG.pdf) is widely used in statistic analysis. [R](https://github.com/huangrh/rug/blob/master/RenHuai20160517RUG.pdf) also has advantage in large data process. For example, it often takes a lot of work to read biosensor data into certain program to analysis. However, it is easy to read biosensor data into a data frame, the most common method to store data in [R](https://github.com/huangrh/rug/blob/master/RenHuai20160517RUG.pdf).  
 In this packages, we first developed a dimerization model and applied it to fit the BLI data of von Willebrand factor propeptide. We  successfully determined the dimerization constant and kinetic parameters of von Willebrand factor propeptide [( for background ) ](http://www.pnas.org/content/105/2/482.full). 
 
 -----
