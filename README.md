@@ -32,7 +32,7 @@ pldfit is developed running in [R (following the link to download and install if
 To get the currect development version from github:    
   \# require devtools  
   \> require(devtools)  
-  \> devtools::install_github("huangrenhuai/pldfit")
+  \> devtools::install_github("huangrh/pldfit")
 
 -----
 ### Model equation & simulation examples:   
